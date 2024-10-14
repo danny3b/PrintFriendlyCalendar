@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Kalendarz</title>
+    <style>
+        table { 
+            width: 100%; 
+            table-layout: fixed; /* Wszystkie kolumny mają tę samą szerokość */
+            border-collapse: collapse; 
+            font-size: 12pt; 
+            font-family: Roboto;
+        }
+        th, td {
+            border: 1px solid black; 
+            padding: 10px; 
+            text-align: left;
+            width: 14.28%; /* Każda kolumna ma dokładnie 1/7 szerokości */
+            height: 100px;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2;
+            height: 20px;
+        }
+        .grey {
+            color: #d0d0d0; /* Szary kolor dla dni spoza bieżącego miesiąca */
+        }
+        h2 {
+            font-family: 'Playwrite GB S';
+            font-size: 40px;
+            text-align: center;
+            position: relative;
+        }
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 30px; /* Rozmiar strzałek */
+            color: #007BFF; /* Kolor strzałek */
+            text-decoration: none; /* Brak podkreślenia */
+        }
+        .prev {
+            left: 10px; /* Pozycjonowanie lewego przycisku */
+        }
+        .next {
+            right: 10px; /* Pozycjonowanie prawego przycisku */
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>
+            <span @click="prevMonth" class="nav-arrow prev">&lt;</span>
+            {{ monthName }} {{ year }}
+            <span @click="nextMonth" class="nav-arrow next">&gt;</span>
+        </h2>
+        <table>
+            <tr>
+                <th>Poniedziałek</th>
+                <th>Wtorek</th>
+                <th>Środa</th>
+                <th>Czwartek</th>
+                <th>Piątek</th>
+                <th>Sobota</th>
+                <th>Niedziela</th>
+            </tr>
+            <tr v-for="(week, index) in calendar" :key="index">
+                <td v-for="day in week" :key="day.date" :class="{ grey: day.isOutside }">{{ day.day }}</td>
+            </tr>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
